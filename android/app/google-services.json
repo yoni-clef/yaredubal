@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "825554932672",
+    "project_id": "yaredubal",
+    "storage_bucket": "yaredubal.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:825554932672:android:edc5557021a5d8eb0d2e25",
+        "android_client_info": {
+          "package_name": "com.example.yaredu"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAuezST6PsIHsTzCA4dLUml3yofQtgM46Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:825554932672:android:76c1de93ddd09adf0d2e25",
+        "android_client_info": {
+          "package_name": "com.example.yaredubal"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAuezST6PsIHsTzCA4dLUml3yofQtgM46Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
