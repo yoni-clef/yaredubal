@@ -79,7 +79,7 @@ class _CustomerDashboardState extends State<CustomerDashboard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Colors.white,
       body: PageView.builder(
         controller: _pageController,
         itemBuilder: (context, index) {
@@ -118,7 +118,7 @@ class _CustomerDashboardState extends State<CustomerDashboard> {
                 color: _currentPage == 1 ? Colors.amberAccent : Colors.white),
             label: 'Messages',
             backgroundColor:
-                _currentPage == 1 ? Colors.amberAccent : Colors.white,
+                _currentPage == 1 ? Colors.blue : Colors.white,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person,
@@ -265,7 +265,7 @@ class _CustomerDashboardState extends State<CustomerDashboard> {
                             margin: EdgeInsets.only(right: 16),
                             padding: EdgeInsets.all(16.0),
                             decoration: BoxDecoration(
-                              color: Colors.black,
+                              color: Colors.white,
                               borderRadius: BorderRadius.circular(10.0),
                               border: Border.all(color: Colors.grey[200]!),
                             ),
