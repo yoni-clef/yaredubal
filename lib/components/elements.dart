@@ -35,7 +35,7 @@ class SimpleComponents {
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(6),
               borderSide: const BorderSide(
-                color: Colors.blue,
+                color: Colors.amberAccent,
                 width: 2.0,
               ),
             ),
@@ -101,14 +101,14 @@ class SimpleComponents {
               width: double.infinity,
               padding: EdgeInsets.symmetric(vertical: 12),
               decoration: BoxDecoration(
-                color: Colors.blue,
+                color: Colors.black,
                 borderRadius: BorderRadius.circular(6),
               ),
               alignment: Alignment.center,
               child: Text(
                 buttonText,
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Colors.amberAccent,
                   fontWeight: FontWeight.w500,
                   fontSize: 18,
                 ),

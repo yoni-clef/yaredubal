@@ -1,21 +1,26 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class BookingCard extends StatefulWidget {
   final Map<String, dynamic> bookingData;
-  final bool isTutor;
+  final bool ismusician;
   final String bookingId;
 
   BookingCard(
       {required this.bookingData,
       required this.bookingId,
-      this.isTutor = false});
+      this.ismusician = false});
 
   @override
   State<BookingCard> createState() => _BookingCardState();
 }
 
 class _BookingCardState extends State<BookingCard> {
+  String userRoleG = "Loading...";
+  double? userRating;
+
   Future<void> updateBookingStatus(String bookingId, String newStatus) async {
     try {
       await FirebaseFirestore.instance
@@ -50,6 +55,50 @@ class _BookingCardState extends State<BookingCard> {
     }
   }
 
+  late Future<Map<String, dynamic>?> musicianDetailsFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    musicianDetailsFuture = fetchmusicianDetails();
+  }
+
+  Future<Map<String, dynamic>?> fetchmusicianDetails() async {
+    final musicianId = widget.bookingData['musicianId'];
+    final doc = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(musicianId)
+        .get();
+    return doc.data();
+  }
+
+  Future<void> submitRating(double rating) async {
+    final musicianId = widget.bookingData['musicianId'];
+    final ratingsRef = FirebaseFirestore.instance
+        .collection('users')
+        .doc(musicianId)
+        .collection('ratings');
+
+    // Save the user's rating
+    await ratingsRef
+        .add({'rating': rating, 'timestamp': FieldValue.serverTimestamp()});
+
+    // Recalculate and update the average rating
+    final ratingsSnapshot = await ratingsRef.get();
+    final ratings =
+        ratingsSnapshot.docs.map((doc) => doc['rating'] as double).toList();
+    final averageRating = ratings.reduce((a, b) => a + b) / ratings.length;
+
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(musicianId)
+        .update({'rating': averageRating});
+
+    setState(() {
+      musicianDetailsFuture = fetchmusicianDetails();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -71,14 +120,14 @@ class _BookingCardState extends State<BookingCard> {
                   CircleAvatar(
                     radius: 30,
                     backgroundImage: NetworkImage(
-                        widget.bookingData['tutorPhotoUrl'] ??
+                        widget.bookingData['musicianPhotoUrl'] ??
                             'https://via.placeholder.com/150'),
                   ),
                   SizedBox(width: 10),
                   Text(
-                    widget.isTutor
+                    widget.ismusician
                         ? widget.bookingData['customerName']
-                        : widget.bookingData['tutorName'],
+                        : widget.bookingData['musicianName'],
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -170,8 +219,9 @@ class _BookingCardState extends State<BookingCard> {
                     }
                   },
                   itemBuilder: (context) => [
-                    PopupMenuItem(
-                        value: 'Confirm', child: Text('Confirm Booking')),
+                    if (widget.ismusician)
+                      PopupMenuItem(
+                          value: 'Confirm', child: Text('Confirm Booking')),
                     PopupMenuItem(
                         value: 'Reschedule', child: Text('Reschedule')),
                     PopupMenuItem(
@@ -203,6 +253,68 @@ class _BookingCardState extends State<BookingCard> {
               ),
             ],
           ),
+          SizedBox(height: 5),
+          widget.bookingData['status'] == 'confirmed' && !widget.ismusician
+              ? Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Phone Number: ${widget.bookingData['phone']}'),
+                    // Rating Section
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16.0, vertical: 16.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Rate this musician',
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(height: 8),
+                          Center(
+                            child: RatingBar.builder(
+                              initialRating: userRating ?? 0,
+                              minRating: 1,
+                              direction: Axis.horizontal,
+                              allowHalfRating: true,
+                              itemCount: 5,
+                              itemPadding:
+                                  EdgeInsets.symmetric(horizontal: 4.0),
+                              itemBuilder: (context, _) => Icon(
+                                Icons.star,
+                                color: Colors.amber,
+                              ),
+                              onRatingUpdate: (rating) {
+                                setState(() {
+                                  userRating = rating;
+                                });
+                              },
+                            ),
+                          ),
+                          SizedBox(height: 16),
+                          Center(
+                            child: ElevatedButton(
+                                onPressed: userRating != null
+                                    ? () async {
+                                        await submitRating(userRating!);
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          const SnackBar(
+                                            content:
+                                                Text('Thank you for rating!'),
+                                          ),
+                                        );
+                                      }
+                                    : null,
+                                child: Text('Submit Rating')),
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                )
+              : SizedBox.shrink(),
           SizedBox(height: 5),
           Row(
             children: [

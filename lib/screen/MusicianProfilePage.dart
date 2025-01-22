@@ -1,30 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:yaredubal/screen/BookingPage.dart';
 
-class TutorProfilePage extends StatefulWidget {
-  final String tutorId;
+class MusicianProfilePage extends StatefulWidget {
+  final String musicianId;
+  final Map<String, dynamic> musicianData;
 
-  TutorProfilePage({required this.tutorId});
+  MusicianProfilePage({required this.musicianId, required this.musicianData});
 
   @override
-  _TutorProfilePageState createState() => _TutorProfilePageState();
+  _MusicianProfilePageState createState() => _MusicianProfilePageState();
 }
 
-class _TutorProfilePageState extends State<TutorProfilePage> {
-  late Future<Map<String, dynamic>?> tutorDetailsFuture;
-  double? userRating;
+class _MusicianProfilePageState extends State<MusicianProfilePage> {
+  late Future<Map<String, dynamic>?> musicianDetailsFuture;
 
   @override
   void initState() {
     super.initState();
-    tutorDetailsFuture = fetchTutorDetails();
+    musicianDetailsFuture = fetchmusicianDetails();
   }
 
-  Future<Map<String, dynamic>?> fetchTutorDetails() async {
+  Future<Map<String, dynamic>?> fetchmusicianDetails() async {
     final doc = await FirebaseFirestore.instance
         .collection('users')
-        .doc(widget.tutorId)
+        .doc(widget.musicianId)
         .get();
     return doc.data();
   }
@@ -32,7 +33,7 @@ class _TutorProfilePageState extends State<TutorProfilePage> {
   Future<void> submitRating(double rating) async {
     final ratingsRef = FirebaseFirestore.instance
         .collection('users')
-        .doc(widget.tutorId)
+        .doc(widget.musicianId)
         .collection('ratings');
 
     // Save the user's rating
@@ -47,11 +48,11 @@ class _TutorProfilePageState extends State<TutorProfilePage> {
 
     await FirebaseFirestore.instance
         .collection('users')
-        .doc(widget.tutorId)
+        .doc(widget.musicianId)
         .update({'rating': averageRating});
 
     setState(() {
-      tutorDetailsFuture = fetchTutorDetails();
+      musicianDetailsFuture = fetchmusicianDetails();
     });
   }
 
@@ -59,59 +60,59 @@ class _TutorProfilePageState extends State<TutorProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Tutor Profile'),
+        title: Text('musician Profile'),
         centerTitle: true,
       ),
       body: FutureBuilder<Map<String, dynamic>?>(
-        future: tutorDetailsFuture,
+        future: musicianDetailsFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
           }
 
           if (!snapshot.hasData || snapshot.data == null) {
-            return Center(child: Text('Tutor details not found.'));
+            return Center(child: Text('musician details not found.'));
           }
 
-          final tutorDetails = snapshot.data!;
+          final musicianDetails = snapshot.data!;
 
           return SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Profile Header Section
-                Stack(
-                  children: [
-                    Container(
-                      height: 200,
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [Colors.blue, Colors.blueAccent],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      top: 50,
-                      left: MediaQuery.of(context).size.width / 2 - 50,
-                      child: CircleAvatar(
-                        radius: 50,
-                        backgroundImage: NetworkImage(
-                            tutorDetails['profileImage'] ??
-                                'https://via.placeholder.com/150'),
-                      ),
-                    ),
-                  ],
-                ),
+                // Stack(
+                //   children: [
+                //     Container(
+                //       height: 200,
+                //       decoration: BoxDecoration(
+                //         gradient: LinearGradient(
+                //           colors: [Colors.blue, Colors.blueAccent],
+                //           begin: Alignment.topLeft,
+                //           end: Alignment.bottomRight,
+                //         ),
+                //       ),
+                //     ),
+                //     Positioned(
+                //       top: 50,
+                //       left: MediaQuery.of(context).size.width / 2 - 50,
+                //       child: CircleAvatar(
+                //         radius: 50,
+                //         backgroundImage: NetworkImage(
+                //             musicianDetails['profileImage'] ??
+                //                 'https://via.placeholder.com/150'),
+                //       ),
+                //     ),
+                //   ],
+                // ),
                 SizedBox(height: 16),
 
-                // Tutor Name and Rating
+                // musician Name and Rating
                 Center(
                   child: Column(
                     children: [
                       Text(
-                        tutorDetails['name'] ?? 'Name not available',
+                        musicianDetails['name'] ?? 'Name not available',
                         style: TextStyle(
                             fontSize: 24, fontWeight: FontWeight.bold),
                       ),
@@ -122,7 +123,7 @@ class _TutorProfilePageState extends State<TutorProfilePage> {
                           Icon(Icons.star, color: Colors.amber),
                           SizedBox(width: 4),
                           Text(
-                            '${tutorDetails['rating'] ?? 'N/A'}',
+                            '${musicianDetails['rating'] ?? 'N/A'}',
                             style: TextStyle(fontSize: 18),
                           ),
                         ],
@@ -145,7 +146,7 @@ class _TutorProfilePageState extends State<TutorProfilePage> {
                       ),
                       SizedBox(height: 8),
                       Text(
-                        tutorDetails['bio'] ?? 'Bio not available',
+                        musicianDetails['bio'] ?? 'Bio not available',
                         style: TextStyle(fontSize: 16),
                       ),
                     ],
@@ -166,7 +167,8 @@ class _TutorProfilePageState extends State<TutorProfilePage> {
                       ),
                       SizedBox(height: 8),
                       Text(
-                        tutorDetails['expertise'] ?? 'Expertise not available',
+                        musicianDetails['expertise'] ??
+                            'Expertise not available',
                         style: TextStyle(fontSize: 16),
                       ),
                     ],
@@ -187,8 +189,8 @@ class _TutorProfilePageState extends State<TutorProfilePage> {
                       ),
                       SizedBox(height: 8),
                       Text(
-                        tutorDetails['hourlyRate'] != null
-                            ? '\$${tutorDetails['hourlyRate']}/hour'
+                        musicianDetails['hourlyRate'] != null
+                            ? '\$${musicianDetails['hourlyRate']}/hour'
                             : 'Rate not available',
                         style: TextStyle(fontSize: 16),
                       ),
@@ -210,60 +212,34 @@ class _TutorProfilePageState extends State<TutorProfilePage> {
                       ),
                       SizedBox(height: 8),
                       Text(
-                        tutorDetails['email'] ?? 'Email not available',
+                        musicianDetails['email'] ?? 'Email not available',
                         style: TextStyle(fontSize: 16),
                       ),
                     ],
                   ),
                 ),
-                // Rating Section
                 Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 16.0, vertical: 16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Rate this Tutor',
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(height: 8),
-                      Center(
-                        child: RatingBar.builder(
-                          initialRating: userRating ?? 0,
-                          minRating: 1,
-                          direction: Axis.horizontal,
-                          allowHalfRating: true,
-                          itemCount: 5,
-                          itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-                          itemBuilder: (context, _) => Icon(
-                            Icons.star,
-                            color: Colors.amber,
-                          ),
-                          onRatingUpdate: (rating) {
-                            setState(() {
-                              userRating = rating;
-                            });
-                          },
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              BookingPage(musicianData: widget.musicianData),
                         ),
+                      );
+                    },
+                    child: Text('Hire'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.amberAccent,
+                      foregroundColor: Colors.black,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8.0),
                       ),
-                      SizedBox(height: 16),
-                      Center(
-                        child: ElevatedButton(
-                          onPressed: userRating != null
-                              ? () async {
-                                  await submitRating(userRating!);
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                        content: Text('Thank you for rating!')),
-                                  );
-                                }
-                              : null,
-                          child: Text('Submit Rating'),
-                        ),
-                      ),
-                    ],
+                      minimumSize: Size(
+                          double.infinity, 36), // Stretch button to full width
+                    ),
                   ),
                 ),
               ],

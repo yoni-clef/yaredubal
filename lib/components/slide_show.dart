@@ -1,8 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
 class SlideshowComponent extends StatefulWidget {
-  final List<Map<String, String>> slides;
+  final List<QueryDocumentSnapshot<Object?>> slides;
   final Duration autoScrollDuration;
 
   const SlideshowComponent({
@@ -69,25 +70,66 @@ class _SlideshowComponentState extends State<SlideshowComponent> {
               },
               itemCount: widget.slides.length,
               itemBuilder: (context, index) {
+                final musician = widget.slides[index];
+                final musicianData = musician.data() as Map<String, dynamic>;
+                print('-----------RECOMMENDATION USERS');
+                print(widget.slides[0].data());
+                print('-----------RECOMMENDATION USERS');
                 return Stack(
                   fit: StackFit.expand,
                   children: [
                     Image.asset(
-                      widget.slides[index]['image']!,
+                      'assets/images/mozart.jpeg',
                       fit: BoxFit.cover,
                     ),
                     Container(
-                      color: Colors.black.withOpacity(0.3),
-                    ),
-                    Center(
-                      child: Text(
-                        widget.slides[index]['title']!,
-                        style: TextStyle(
-                          fontSize: 24,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.bottomCenter,
+                          end: Alignment.topCenter,
+                          colors: [
+                            Colors.black.withOpacity(1), // Black at the bottom
+                            Colors.transparent, // Transparent at the top
+                          ],
+                          stops: [0.0, 0.6], // Adjust to control fade effect
                         ),
-                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    Positioned(
+                      bottom: 20, // Adjust the distance from the bottom
+                      left: 20,
+                      right: 0,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Name: ${musicianData['name']!}',
+                            style: const TextStyle(
+                              fontSize: 20,
+                              color: Colors.grey,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                          Text(
+                            'Expertise: ${musicianData['expertise']!}',
+                            style: const TextStyle(
+                              fontSize: 20,
+                              color: Colors.grey,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                          Text(
+                            'Rating: ${musicianData['rating'].toString().substring(0, 3)}',
+                            style: const TextStyle(
+                              fontSize: 20,
+                              color: Colors.grey,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
                       ),
                     ),
                   ],

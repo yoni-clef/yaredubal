@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:yaredubal/screen/CustomerDashboard.dart';
-import 'package:yaredubal/screen/TutorDashboard.dart';
 import 'package:yaredubal/components/elements.dart';
 import 'package:yaredubal/screen/signup.dart';
 
@@ -54,16 +53,11 @@ class _LoginPageState extends State<LoginPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SizedBox(height: 48),
-              Image.asset(
-                'assets/images/logo.jpg',
-                height: 100,
-                width: 300,
-                fit: BoxFit.cover,
-              ),
+
               SizedBox(height: 24),
 
               Text(
-                'Welcome to TutForYou',
+                'Yaredubal',
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
@@ -96,7 +90,7 @@ class _LoginPageState extends State<LoginPage> {
                         children: [
                       TextSpan(
                         text: 'Create Account',
-                        style: TextStyle(color: Colors.blue),
+                        style: TextStyle(color: Colors.amber[700]),
                       )
                     ])),
               ),
@@ -135,7 +129,7 @@ class _LoginPageState extends State<LoginPage> {
           .get();
       final role = doc.data()?['role'];
 
-      if (role == 'Customer') {
+      if (role == 'User') {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
@@ -143,10 +137,14 @@ class _LoginPageState extends State<LoginPage> {
                   CustomerDashboard(name: doc.data()?['name'] ?? '')),
         );
       } else {
-        // Handle Tutor navigation
+        // Handle musician navigation
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => TutorDashboard()),
+          MaterialPageRoute(
+              builder: (context) => CustomerDashboard(
+                    name: doc.data()?['name'] ?? '',
+                    isMusician: true,
+                  )),
         );
       }
     }

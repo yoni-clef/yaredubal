@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:yaredubal/screen/CustomerDashboard.dart';
-import 'package:yaredubal/screen/TutorDashboard.dart';
 import 'package:yaredubal/components/elements.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -177,10 +176,14 @@ class _SignUpPageState extends State<SignUpPage> {
                   CustomerDashboard(name: doc.data()?['name'] ?? '')),
         );
       } else {
-        // Handle Tutor navigation
+        // Handle musician navigation
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => TutorDashboard()),
+          MaterialPageRoute(
+              builder: (context) => CustomerDashboard(
+                    name: doc.data()?['name'] ?? '',
+                    isMusician: true,
+                  )),
         );
       }
     }

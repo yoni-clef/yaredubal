@@ -3,9 +3,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class BookingPage extends StatefulWidget {
-  final Map<String, dynamic> tutorData;
+  final Map<String, dynamic> musicianData;
 
-  BookingPage({required this.tutorData});
+  BookingPage({required this.musicianData});
 
   @override
   _BookingPageState createState() => _BookingPageState();
@@ -41,17 +41,18 @@ class _BookingPageState extends State<BookingPage> {
     }
   }
 
-  Future<void> bookTutor() async {
+  Future<void> bookmusician() async {
     try {
       final user = FirebaseAuth.instance.currentUser;
       if (user == null) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('You need to be logged in to book a tutor.')),
+          SnackBar(
+              content: Text('You need to be logged in to book a musician.')),
         );
         return;
       }
 
-      print(widget.tutorData['id']);
+      print(widget.musicianData['id']);
       final doc = await FirebaseFirestore.instance
           .collection('users')
           .doc(user.uid)
@@ -59,8 +60,9 @@ class _BookingPageState extends State<BookingPage> {
 
       final customerId = user.uid;
       final customerName = doc['name'] ?? 'Customer Name';
-      final tutorId = widget.tutorData['id'];
-      final tutorName = widget.tutorData['name'];
+      final musicianId = widget.musicianData['id'];
+      final musicianName = widget.musicianData['name'];
+      final musicianPhone = widget.musicianData['phone'];
       final date = _dateController.text.trim();
       final time = _timeController.text.trim();
 
@@ -74,14 +76,15 @@ class _BookingPageState extends State<BookingPage> {
       // Check if booking conflicts exist (Optional)
       final existingBookings = await FirebaseFirestore.instance
           .collection('bookings')
-          .where('tutorId', isEqualTo: tutorId)
+          .where('musicianId', isEqualTo: musicianId)
           .where('date', isEqualTo: date)
           .where('time', isEqualTo: time)
           .get();
 
       if (existingBookings.docs.isNotEmpty) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('The tutor is not available at this time.')),
+          SnackBar(
+              content: Text('The musician is not available at this time.')),
         );
         return;
       }
@@ -90,10 +93,11 @@ class _BookingPageState extends State<BookingPage> {
       await FirebaseFirestore.instance.collection('bookings').add({
         'customerId': customerId,
         'customerName': customerName,
-        'tutorId': tutorId,
-        'tutorName': tutorName,
+        'musicianId': musicianId,
+        'musicianName': musicianName,
         'date': date,
         'time': time,
+        'phone': musicianPhone,
         'status': 'pending', // Optional field
       });
 
@@ -104,7 +108,7 @@ class _BookingPageState extends State<BookingPage> {
       Navigator.pop(context); // Go back to the previous screen
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to book tutor: $e')),
+        SnackBar(content: Text('Failed to book musician: $e')),
       );
     }
   }
@@ -113,35 +117,36 @@ class _BookingPageState extends State<BookingPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Book Tutor'),
+        title: Text('Book musician'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Tutor Details
+            // musician Details
             Row(
               children: [
-                CircleAvatar(
-                  radius: 40,
-                  backgroundImage: NetworkImage(widget.tutorData['photoUrl'] ??
-                      'https://via.placeholder.com/150'),
-                ),
+                // CircleAvatar(
+                //   radius: 40,
+                //   backgroundImage: NetworkImage(
+                //       widget.musicianData['photoUrl'] ??
+                //           'https://via.placeholder.com/150'),
+                // ),
                 SizedBox(width: 16),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      widget.tutorData['name'] ?? 'Tutor Name',
+                      widget.musicianData['name'] ?? 'musician Name',
                       style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
-                    Text('Expertise: ${widget.tutorData['expertise']}'),
+                    Text('Expertise: ${widget.musicianData['expertise']}'),
                     Row(
                       children: [
                         Icon(Icons.star, color: Colors.orange),
-                        Text('${widget.tutorData['rating']}'),
+                        Text('${widget.musicianData['rating']}'),
                       ],
                     ),
                   ],
@@ -177,7 +182,7 @@ class _BookingPageState extends State<BookingPage> {
             ),
             SizedBox(height: 16),
             ElevatedButton(
-              onPressed: bookTutor,
+              onPressed: bookmusician,
               child: Text('Confirm Booking'),
             ),
           ],
