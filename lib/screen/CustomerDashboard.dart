@@ -128,7 +128,7 @@ class _CustomerDashboardState extends State<CustomerDashboard> {
                     )),
                 onPressed: () async {
                   await FirebaseAuth.instance.signOut();
-                  Navigator.push(
+                  Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
                           builder: (context) => OnboardingPage()));

@@ -1,11 +1,12 @@
 import 'dart:convert';
 
 String response = '''[
-  {
-    "name": "Ludwig van Beethoven",
-    "biography": "Ludwig van Beethoven (1770–1827) was a German composer. Born in Bonn, he was a gifted pianist and violist. After working as a court musician in Bonn, he moved to Vienna to study with Joseph Haydn and remained there for the rest of his life. Beethoven's work spans both the Classical and Romantic periods, and he pushed the boundaries of music, philosophy, and politics of his time.",
-    "achievements": "Composed the Ninth Symphony and Moonlight Sonata.",
-    "imagePath": "assets/images/beethoven.jpeg"
+  
+   {
+    "name": "Mulatu astatke ",
+    "biography": "Mulatu astatke is the father of Ethio-Jazz. Composed many Ethio jazz pieaces. From his works Yekatit, Yekermo Sew, Tezeta, and many more are the most popular.",
+    "achievements": "The Father of Ethio-Jazz.",
+    "imagePath": "assets/images/mulatu.jpg"
   },
   {
     "name": " Saint Yared",
@@ -19,18 +20,7 @@ String response = '''[
     "achievements": "Composed the Ninth Symphony and Moonlight Sonata.",
     "imagePath": "assets/images/beethoven.jpeg"
   },
-  {
-    "name": "Wolfgang Amadeus Mozart",
-    "biography": "Austrian composer of the classical era.",
-    "achievements": "Composed The Magic Flute and Requiem.",
-    "imagePath": "assets/images/mozart.jpeg"
-  },
-  {
-    "name": "Ludwig van Beethoven",
-    "biography": "German composer and pianist.",
-    "achievements": "Composed the Ninth Symphony and Moonlight Sonata.",
-    "imagePath": "assets/images/beethoven.jpeg"
-  },
+
   {
     "name": "Wolfgang Amadeus Mozart",
     "biography": "Austrian composer of the classical era.",
