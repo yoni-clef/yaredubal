@@ -123,8 +123,15 @@ class _MusicianProfilePageState extends State<MusicianProfilePage> {
                           Icon(Icons.star, color: Colors.amber),
                           SizedBox(width: 4),
                           Text(
-                            '${musicianDetails['rating'] ?? 'N/A'}',
-                            style: TextStyle(fontSize: 18),
+                            musicianDetails['rating'] == null
+                                ? 'Not rated yet'
+                                : musicianDetails['rating']
+                                    .toString()
+                                    .substring(0, 3),
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.grey[600],
+                            ),
                           ),
                         ],
                       ),
@@ -197,6 +204,28 @@ class _MusicianProfilePageState extends State<MusicianProfilePage> {
                     ],
                   ),
                 ),
+                SizedBox(height: 8),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Instrument',
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(height: 8),
+                      Text(
+                        musicianDetails['instrument'] == null ||
+                                musicianDetails['instrument'] == 'none'
+                            ? 'There is no instrument I play'
+                            : musicianDetails['instrument'],
+                        style: TextStyle(fontSize: 16),
+                      ),
+                    ],
+                  ),
+                ),
                 SizedBox(height: 16),
 
                 // Contact Section
@@ -212,7 +241,7 @@ class _MusicianProfilePageState extends State<MusicianProfilePage> {
                       ),
                       SizedBox(height: 8),
                       Text(
-                        musicianDetails['email'] ?? 'Email not available',
+                        "You will get ${musicianDetails['name']}'s contact details after your hire request confirmed.",
                         style: TextStyle(fontSize: 16),
                       ),
                     ],

@@ -22,6 +22,7 @@ class _BookingPageState extends State<BookingPage> {
       firstDate: DateTime.now(),
       lastDate: DateTime(2101),
     );
+   
     if (picked != null) {
       setState(() {
         _dateController.text = "${picked.toLocal()}".split(' ')[0];
@@ -125,34 +126,7 @@ class _BookingPageState extends State<BookingPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // musician Details
-            Row(
-              children: [
-                // CircleAvatar(
-                //   radius: 40,
-                //   backgroundImage: NetworkImage(
-                //       widget.musicianData['photoUrl'] ??
-                //           'https://via.placeholder.com/150'),
-                // ),
-                SizedBox(width: 16),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      widget.musicianData['name'] ?? 'musician Name',
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    ),
-                    Text('Expertise: ${widget.musicianData['expertise']}'),
-                    Row(
-                      children: [
-                        Icon(Icons.star, color: Colors.orange),
-                        Text('${widget.musicianData['rating']}'),
-                      ],
-                    ),
-                  ],
-                ),
-              ],
-            ),
+
             SizedBox(height: 24),
 
             // Booking Form
@@ -165,7 +139,12 @@ class _BookingPageState extends State<BookingPage> {
               controller: _dateController,
               decoration: InputDecoration(
                 labelText: 'Preferred Date (e.g., 2024-12-30)',
+                labelStyle: TextStyle(color: Colors.black),
                 border: OutlineInputBorder(),
+                focusColor: Colors.amberAccent,
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.amberAccent),
+                ),
               ),
               readOnly: true,
               onTap: () => _selectDate(context),
@@ -175,7 +154,12 @@ class _BookingPageState extends State<BookingPage> {
               controller: _timeController,
               decoration: InputDecoration(
                 labelText: 'Preferred Time (e.g., 10:00 AM)',
+                labelStyle: TextStyle(color: Colors.black),
                 border: OutlineInputBorder(),
+                focusColor: Colors.amberAccent,
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.amberAccent),
+                ),
               ),
               readOnly: true,
               onTap: () => _selectTime(context),
@@ -184,6 +168,10 @@ class _BookingPageState extends State<BookingPage> {
             ElevatedButton(
               onPressed: bookmusician,
               child: Text('Confirm Booking'),
+              style: ElevatedButton.styleFrom(
+                foregroundColor: Colors.amberAccent,
+                backgroundColor: Colors.black,
+              ),
             ),
           ],
         ),

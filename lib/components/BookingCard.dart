@@ -20,7 +20,7 @@ class BookingCard extends StatefulWidget {
 class _BookingCardState extends State<BookingCard> {
   String userRoleG = "Loading...";
   double? userRating;
-
+  bool ratingSubmitted = false;
   Future<void> updateBookingStatus(String bookingId, String newStatus) async {
     try {
       await FirebaseFirestore.instance
@@ -117,22 +117,25 @@ class _BookingCardState extends State<BookingCard> {
             children: [
               Row(
                 children: [
-                  CircleAvatar(
-                    radius: 30,
-                    backgroundImage: NetworkImage(
-                        widget.bookingData['musicianPhotoUrl'] ??
-                            'https://via.placeholder.com/150'),
-                  ),
-                  SizedBox(width: 10),
-                  Text(
-                    widget.ismusician
-                        ? widget.bookingData['customerName']
-                        : widget.bookingData['musicianName'],
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+                  Row(
+                    children: [
+                      Text(
+                        "Name : ",
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(width: 10),
+                      Text(
+                        widget.ismusician
+                            ? widget.bookingData['customerName']
+                            : widget.bookingData['musicianName'],
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  )
                 ],
               ),
               Align(
@@ -259,58 +262,70 @@ class _BookingCardState extends State<BookingCard> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text('Phone Number: ${widget.bookingData['phone']}'),
-                    // Rating Section
                     Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 16.0, vertical: 16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Rate this musician',
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold),
-                          ),
-                          SizedBox(height: 8),
-                          Center(
-                            child: RatingBar.builder(
-                              initialRating: userRating ?? 0,
-                              minRating: 1,
-                              direction: Axis.horizontal,
-                              allowHalfRating: true,
-                              itemCount: 5,
-                              itemPadding:
-                                  EdgeInsets.symmetric(horizontal: 4.0),
-                              itemBuilder: (context, _) => Icon(
-                                Icons.star,
-                                color: Colors.amber,
+                      child: ratingSubmitted
+                          ? Center(
+                              child: Text(
+                                'Thank you for your rating!',
+                                style: TextStyle(
+                                    fontSize: 18, fontWeight: FontWeight.bold),
                               ),
-                              onRatingUpdate: (rating) {
-                                setState(() {
-                                  userRating = rating;
-                                });
-                              },
+                            )
+                          : Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Rate this musician',
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                SizedBox(height: 8),
+                                Center(
+                                  child: RatingBar.builder(
+                                    initialRating: userRating ?? 0,
+                                    minRating: 1,
+                                    direction: Axis.horizontal,
+                                    allowHalfRating: true,
+                                    itemCount: 5,
+                                    itemPadding:
+                                        EdgeInsets.symmetric(horizontal: 4.0),
+                                    itemBuilder: (context, _) => Icon(
+                                      Icons.star,
+                                      color: Colors.amber,
+                                    ),
+                                    onRatingUpdate: (rating) {
+                                      setState(() {
+                                        userRating = rating;
+                                      });
+                                    },
+                                  ),
+                                ),
+                                SizedBox(height: 16),
+                                Center(
+                                  child: ElevatedButton(
+                                    onPressed: userRating != null
+                                        ? () async {
+                                            await submitRating(userRating!);
+                                            setState(() {
+                                              ratingSubmitted = true;
+                                            });
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
+                                              const SnackBar(
+                                                content: Text(
+                                                    'Thank you for rating!'),
+                                              ),
+                                            );
+                                          }
+                                        : null,
+                                    child: Text('Submit Rating'),
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
-                          SizedBox(height: 16),
-                          Center(
-                            child: ElevatedButton(
-                                onPressed: userRating != null
-                                    ? () async {
-                                        await submitRating(userRating!);
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(
-                                          const SnackBar(
-                                            content:
-                                                Text('Thank you for rating!'),
-                                          ),
-                                        );
-                                      }
-                                    : null,
-                                child: Text('Submit Rating')),
-                          )
-                        ],
-                      ),
                     ),
                   ],
                 )

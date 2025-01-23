@@ -105,6 +105,11 @@ class _HireScreenState extends State<HireScreen> {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0),
                   ),
+                  focusColor: Colors.amberAccent,
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    borderSide: BorderSide(color: Colors.amberAccent),
+                  ),
                 ),
                 onChanged: (value) {
                   setState(() {
@@ -131,16 +136,14 @@ class _HireScreenState extends State<HireScreen> {
                           itemCount: musicians.length,
                           itemBuilder: (context, index) {
                             final musician = musicians[index];
-                            print('------ MUSUC');
-                            print(musician.data());
-                            print('------ MUSUC');
+
                             final musicianData =
                                 musician.data() as Map<String, dynamic>;
                             return Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: SizedBox(
                                 width: 300,
-                                height: 170,
+                                height: 200,
                                 child: Container(
                                   margin: EdgeInsets.only(right: 16),
                                   padding: EdgeInsets.all(16.0),
@@ -154,47 +157,67 @@ class _HireScreenState extends State<HireScreen> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      // Image.network(
-                                      //   "${musicianData['profileImage']}",
-                                      //   height: 150,
-                                      //   width: 300,
-                                      //   fit: BoxFit.cover,
-                                      //   errorBuilder: (context, error, stackTrace) {
-                                      //     return Image.asset(
-                                      //       'assets/images/mozart.jpeg',
-                                      //       height: 150,
-                                      //       width: 300,
-                                      //     );
-                                      //   },
-                                      // ),
                                       const SizedBox(width: 24),
-                                      Text(
-                                        musicianData['name'] ?? 'No Name',
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                                      Row(
+                                        children: [
+                                          Text("Name:",
+                                              style: TextStyle(
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.bold)),
+                                          SizedBox(width: 10),
+                                          Text(
+                                            musicianData['name'] ?? 'No Name',
+                                            style: TextStyle(
+                                              fontSize: 18,
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                       SizedBox(height: 4),
-                                      Text(
-                                        'Expertise: ${musicianData['expertise']}',
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          color: Colors.grey[600],
-                                        ),
+                                      Row(
+                                        children: [
+                                          Text("Expertise:",
+                                              style: TextStyle(
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.bold)),
+                                          SizedBox(width: 10),
+                                          Text(
+                                            musicianData['expertise'] ??
+                                                'No expertise',
+                                            style: TextStyle(
+                                              fontSize: 18,
+                                            ),
+                                          ),
+                                        ],
                                       ),
-
                                       SizedBox(height: 4),
-
+                                      Row(
+                                        children: [
+                                          Text("Instrument:",
+                                              style: TextStyle(
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.bold)),
+                                          SizedBox(width: 10),
+                                          Text(
+                                            musicianData['instrument'] ??
+                                                'No instrument',
+                                            style: TextStyle(
+                                              fontSize: 18,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                       Row(
                                         children: [
                                           Icon(Icons.star,
                                               color: Colors.orange, size: 16),
                                           SizedBox(width: 4),
                                           Text(
-                                            musicianData['rating']
-                                                .toString()
-                                                .substring(0, 3),
+                                            musicianData['rating'] == null
+                                                ? 'Not rated yet'
+                                                : musicianData['rating']
+                                                    .toString()
+                                                    .substring(0, 3),
                                             style: TextStyle(
                                               fontSize: 14,
                                               color: Colors.grey[600],

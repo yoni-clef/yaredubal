@@ -175,7 +175,7 @@ class _CustomerDashboardState extends State<CustomerDashboard> {
           BottomNavigationBarItem(
             icon: Icon(Icons.calendar_month,
                 color: _currentPage == 1 ? Colors.amberAccent : Colors.black),
-            label: 'Messages',
+            label: 'Bookings',
             backgroundColor: _currentPage == 1 ? Colors.blue : Colors.black,
           ),
           BottomNavigationBarItem(
@@ -201,30 +201,6 @@ class _CustomerDashboardState extends State<CustomerDashboard> {
           children: [
             SizedBox(height: 16),
 
-            // Search Bar
-            // TextField(
-            // controller: _searchController,
-            //   decoration: InputDecoration(
-            //     hintText: 'Find a musician...',
-            //     prefixIcon: Icon(Icons.search),
-            //     suffixIcon: IconButton(
-            //       icon: Icon(Icons.clear),
-            //       onPressed: () {
-            //         _searchController.clear();
-            //         setState(() {
-            //           _searchQuery = '';
-            //         });
-            //       },
-            //     ),
-            //     border:
-            //         OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-            //   ),
-            //   onChanged: (value) {
-            //     setState(() {
-            //       _searchQuery = value;
-            //     });
-            //   },
-            // ),
             SizedBox(height: 24),
 
             _searchQuery.isEmpty
