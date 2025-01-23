@@ -1,16 +1,13 @@
 # yaredubal
 
-A new Flutter project.
+The app name comes from two names Yared and Yubal. Yared is creator of Ethiopian Scales. Yubal is the first human being to create musical 
+instruments. 
 
+#Objective
+
+This project is aimed to know famous musicians in the world and to hire musicians.
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+1.Download the apk file. 
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers musicianials,
-samples, guidance on mobile development, and a full API reference.
+2.Open account and deep dive into music world.
