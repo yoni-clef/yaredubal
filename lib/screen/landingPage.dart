@@ -34,10 +34,10 @@ class OnboardingPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Discover Musicians. \nExperience the Magic.',
+                        'Discover Musicians. \nExperience Music World.',
                         style: TextStyle(
                           color: Colors.black,
-                          fontSize: 28,
+                          fontSize: 23,
                           fontWeight: FontWeight.bold,
                         ),
                       ),

@@ -133,18 +133,7 @@ class _BookingCardState extends State<BookingCard> {
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                         ),
-                        
                       ),
-                      // Text(
-                      //   widget.ismusician
-                      //       ? musicianDetailsFuture[]
-                      //       : widget.bookingData['musicianName'],
-                      //   style: TextStyle(
-                      //     fontSize: 18,
-                      //     fontWeight: FontWeight.bold,
-                      //   ),
-                        
-                      // )
                     ],
                   )
                 ],

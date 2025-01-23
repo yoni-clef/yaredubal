@@ -80,31 +80,7 @@ class _MusicianProfilePageState extends State<MusicianProfilePage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Profile Header Section
-                // Stack(
-                //   children: [
-                //     Container(
-                //       height: 200,
-                //       decoration: BoxDecoration(
-                //         gradient: LinearGradient(
-                //           colors: [Colors.blue, Colors.blueAccent],
-                //           begin: Alignment.topLeft,
-                //           end: Alignment.bottomRight,
-                //         ),
-                //       ),
-                //     ),
-                //     Positioned(
-                //       top: 50,
-                //       left: MediaQuery.of(context).size.width / 2 - 50,
-                //       child: CircleAvatar(
-                //         radius: 50,
-                //         backgroundImage: NetworkImage(
-                //             musicianDetails['profileImage'] ??
-                //                 'https://via.placeholder.com/150'),
-                //       ),
-                //     ),
-                //   ],
-                // ),
+                
                 SizedBox(height: 16),
 
                 // musician Name and Rating
@@ -241,7 +217,7 @@ class _MusicianProfilePageState extends State<MusicianProfilePage> {
                       ),
                       SizedBox(height: 8),
                       Text(
-                        "You will get ${musicianDetails['name']}'s contact details after your hire request confirmed.",
+                        "You will get ${musicianDetails['name']}'s contact details after your hire request accepted by ${musicianDetails['name']}.",
                         style: TextStyle(fontSize: 16),
                       ),
                     ],

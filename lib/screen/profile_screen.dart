@@ -42,7 +42,6 @@ class _ProfilePageState extends State<ProfilePage> {
         _phoneController.text = doc['phone'];
         _bioController.text = doc['bio'] ?? '';
         _hourlyRateController.text = doc['hourlyRate'] ?? '';
-        _yearsOfExperienceController.text = doc['yearsOfExperience'] ?? '';
       });
     }
   }
@@ -56,7 +55,6 @@ class _ProfilePageState extends State<ProfilePage> {
         'phone': _phoneController.text,
         'bio': _bioController.text,
         'hourlyRate': _hourlyRateController.text,
-        'yearsOfExperience': _yearsOfExperienceController.text,
       });
       setState(() {
         _isEditing = false;
@@ -89,6 +87,9 @@ class _ProfilePageState extends State<ProfilePage> {
         padding: EdgeInsets.all(16),
         child: Column(
           children: [
+            CircleAvatar(
+                radius: 50,
+                backgroundImage: AssetImage("assets/images/mozart.jpeg")),
             SizedBox(height: 20),
             _buildEditableField('Name', _nameController),
             _buildEditableField('Phone', _phoneController),
@@ -96,9 +97,6 @@ class _ProfilePageState extends State<ProfilePage> {
               _buildEditableField('Bio', _bioController, maxLines: 3),
             if (_isMusician)
               _buildEditableField('Hourly Rate', _hourlyRateController),
-            if (_isMusician)
-              _buildEditableField(
-                  'Years of Experience', _yearsOfExperienceController),
           ],
         ),
       ),
