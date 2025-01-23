@@ -49,7 +49,7 @@ This project is licensed under the MIT License. See the `LICENSE` file for more 
 
 ## Contact
 
-For inquiries or support, please contact us at [yoni-clef](https://github.com/yoni-clef).
+For inquiries or support, please contact us at [yoni-clef](https://yoniasenafi22@gmail.com).
 
 Embark on your musical journey with Yaredubal and connect with the world's finest musicians! 
 
