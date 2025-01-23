@@ -89,9 +89,6 @@ class _ProfilePageState extends State<ProfilePage> {
         padding: EdgeInsets.all(16),
         child: Column(
           children: [
-            CircleAvatar(
-                radius: 50,
-                backgroundImage: AssetImage("assets/images/mozart.jpeg")),
             SizedBox(height: 20),
             _buildEditableField('Name', _nameController),
             _buildEditableField('Phone', _phoneController),

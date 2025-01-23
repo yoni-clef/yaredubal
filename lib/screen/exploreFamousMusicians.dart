@@ -1,10 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:yaredubal/screen/musicial_details_screen.dart';
-import 'package:yaredubal/screen/musician.dart';
-import 'package:yaredubal/screen/musician.dart';
-import 'package:yaredubal/screen/musicians.dart';
+import 'package:yaredubal/screen/famousMusiciansDetail.dart';
+import 'package:yaredubal/screen/musicianModel.dart';
+import 'package:yaredubal/screen/musicianModel.dart';
+import 'package:yaredubal/screen/musiciansJson.dart';
 
 class ExploreScreen extends StatefulWidget {
   const ExploreScreen({super.key});

@@ -16,7 +16,7 @@ class _SignUpPageState extends State<SignUpPage> {
   final TextEditingController _confirmPasswordController =
       TextEditingController();
   final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _profileImageController = TextEditingController();
+
   final TextEditingController _expertiseController = TextEditingController();
   final TextEditingController _hourlyRateController = TextEditingController();
   final TextEditingController _bioController = TextEditingController();
@@ -62,7 +62,6 @@ class _SignUpPageState extends State<SignUpPage> {
         'id': userCredential.user?.uid,
         'email': _emailController.text.trim(),
         'name': _nameController.text.trim(),
-        'profileImage': _profileImageController.text.trim(),
         'role': _selectedRole,
         'phone': _phoneController.text.trim(),
         'gender': _selectedGender,
@@ -76,7 +75,10 @@ class _SignUpPageState extends State<SignUpPage> {
           'hourlyRate': _hourlyRateController.text.trim(),
           'bio': _bioController.text.trim(),
           'instrument': _instrumentController.text.trim(),
-          'searchableAttributes': [_expertiseController.text.trim(), _instrumentController.text.trim()]
+          'searchableAttributes': [
+            _expertiseController.text.trim(),
+            _instrumentController.text.trim()
+          ]
         });
       }
 
@@ -182,7 +184,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     labelText: 'Gender',
                     border: OutlineInputBorder(),
                   ),
-                  items: ['Male', 'Female', 'Other'].map((gender) {
+                  items: ['Male', 'Female'].map((gender) {
                     return DropdownMenuItem(
                       value: gender,
                       child: Text(gender),
@@ -221,13 +223,13 @@ class _SignUpPageState extends State<SignUpPage> {
                   SimpleComponents.buildTextField(
                     _expertiseController,
                     "Expertise",
-                    "e.g., Pianist, Guitarist",
+                    "e.g Pianist, Guitarist",
                   ),
                   SizedBox(height: 16),
                   SimpleComponents.buildTextField(
                     _hourlyRateController,
                     "Hourly Rate",
-                    "e.g., 200",
+                    "e.g 200",
                   ),
                   SizedBox(height: 16),
                   SimpleComponents.buildTextField(
@@ -261,7 +263,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       children: [
                         TextSpan(
                           text: 'Login',
-                          style: TextStyle(color: Colors.blue),
+                          style: TextStyle(color: Colors.amber[600]),
                         ),
                       ],
                     ),

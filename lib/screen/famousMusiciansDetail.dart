@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:yaredubal/screen/musician.dart';
+import 'package:yaredubal/screen/musicianModel.dart';
 
 class MusicianDetailsScreen extends StatelessWidget {
   final Musician musician;

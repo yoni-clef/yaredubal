@@ -5,11 +5,11 @@ import 'package:yaredubal/screen/BookingPage.dart';
 import 'package:yaredubal/screen/CustomerBookingsPage.dart';
 import 'package:yaredubal/screen/musicianDashboard.dart';
 import 'package:yaredubal/screen/musicianProfilePage.dart';
-import 'package:yaredubal/screen/explore_screen.dart';
+import 'package:yaredubal/screen/exploreFamousMusicians.dart';
 import 'package:yaredubal/screen/hire_screen.dart';
 import 'package:yaredubal/screen/login.dart';
-import 'package:yaredubal/components/slide_show.dart';
-import 'package:yaredubal/screen/profile_page.dart';
+import 'package:yaredubal/screen/profile_screen.dart';
+import 'package:yaredubal/screen/landingPage.dart';
 
 class CustomerDashboard extends StatefulWidget {
   final String name;
@@ -128,8 +128,10 @@ class _CustomerDashboardState extends State<CustomerDashboard> {
                     )),
                 onPressed: () async {
                   await FirebaseAuth.instance.signOut();
-                  Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) => LoginPage()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => OnboardingPage()));
                 },
                 child: Text(
                   'Logout',
@@ -200,9 +202,7 @@ class _CustomerDashboardState extends State<CustomerDashboard> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SizedBox(height: 16),
-
             SizedBox(height: 24),
-
             _searchQuery.isEmpty
                 ? Center(
                     child: Container(
@@ -272,131 +272,6 @@ class _CustomerDashboardState extends State<CustomerDashboard> {
             SizedBox(
               height: 60,
             ),
-            // Search Results or Recommended musicians
-            // Text(
-            //   _searchQuery.isEmpty ? 'Recommended musicians' : 'Search Results',
-            //   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            // ),
-            // SizedBox(height: 8),
-            // StreamBuilder<QuerySnapshot>(
-            //   stream: searchmusicians(_searchQuery),
-            //   builder: (context, snapshot) {
-            //     if (snapshot.connectionState == ConnectionState.waiting) {
-            //       return Center(child: CircularProgressIndicator());
-            //     }
-            //     if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-            //       return Center(child: Text('No musicians found.'));
-            //     }
-
-            //     final musicians = snapshot.data!.docs;
-            //     print(musicians[0].data());
-            //     return SizedBox(
-            //       height: 300,
-            //       child: ListView.builder(
-            //         scrollDirection: Axis.horizontal,
-            //         itemCount: musicians.length,
-            //         itemBuilder: (context, index) {
-            //           final musician = musicians[index];
-            //           final musicianData = musician.data() as Map<String, dynamic>;
-            //           return SizedBox(
-            //             width: 300,
-            //             height: 300,
-            //             child: GestureDetector(
-            //               onTap: () {
-            //                 Navigator.push(
-            //                   context,
-            //                   MaterialPageRoute(
-            //                     builder: (context) => musicianProfilePage(
-            //                       musicianId: musician['id'],
-            //                     ),
-            //                   ),
-            //                 );
-            //               },
-            //               child: Container(
-            //                 margin: EdgeInsets.only(right: 16),
-            //                 padding: EdgeInsets.all(16.0),
-            //                 decoration: BoxDecoration(
-            //                   color: Colors.white,
-            //                   borderRadius: BorderRadius.circular(10.0),
-            //                   border: Border.all(color: Colors.grey[200]!),
-            //                 ),
-            //                 child: Column(
-            //                   crossAxisAlignment: CrossAxisAlignment.start,
-            //                   children: [
-            //                     Image.network(
-            //                       "${musicianData['profileImage']}",
-            //                       height: 150,
-            //                       width: 300,
-            //                       fit: BoxFit.cover,
-            //                       errorBuilder: (context, error, stackTrace) {
-            //                         return Image.asset(
-            //                           'assets/images/profile.jpg',
-            //                           height: 150,
-            //                           width: 300,
-            //                         );
-            //                       },
-            //                     ),
-            //                     const SizedBox(width: 24),
-            //                     Row(
-            //                       mainAxisAlignment:
-            //                           MainAxisAlignment.spaceBetween,
-            //                       children: [
-            //                         Text(
-            //                           musicianData['name'] ?? 'No Name',
-            //                           style: TextStyle(
-            //                             fontSize: 18,
-            //                             fontWeight: FontWeight.bold,
-            //                           ),
-            //                         ),
-            //                         Row(
-            //                           children: [
-            //                             Icon(Icons.star,
-            //                                 color: Colors.orange, size: 16),
-            //                             SizedBox(width: 4),
-            //                             Text(
-            //                               '${musicianData['rating']}',
-            //                               style: TextStyle(
-            //                                 fontSize: 14,
-            //                                 color: Colors.grey[600],
-            //                               ),
-            //                             ),
-            //                           ],
-            //                         ),
-            //                       ],
-            //                     ),
-            //                     SizedBox(height: 4),
-            //                     Text(
-            //                       'Expertise: ${musicianData['expertise']}',
-            //                       style: TextStyle(
-            //                         fontSize: 14,
-            //                         color: Colors.grey[600],
-            //                       ),
-            //                     ),
-            //                     Spacer(),
-            //                     ElevatedButton(
-            //                       onPressed: () =>
-            //                           navigateToBookingPage(musicianData),
-            //                       child: Text('Book Now'),
-            //                       style: ElevatedButton.styleFrom(
-            //                         backgroundColor: Colors.amberAccent,
-            //                         foregroundColor: Colors.black,
-            //                         shape: RoundedRectangleBorder(
-            //                           borderRadius: BorderRadius.circular(8.0),
-            //                         ),
-            //                         minimumSize: Size(double.infinity,
-            //                             36), // Stretch button to full width
-            //                       ),
-            //                     ),
-            //                   ],
-            //                 ),
-            //               ),
-            //             ),
-            //           );
-            //         },
-            //       ),
-            //     );
-            //   },
-            // ),
           ],
         ),
       ),

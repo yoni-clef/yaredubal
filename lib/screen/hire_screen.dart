@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:yaredubal/components/slide_show.dart';
+
 import 'package:yaredubal/screen/BookingPage.dart';
 import 'package:yaredubal/screen/musicianProfilePage.dart';
 import 'package:rxdart/rxdart.dart';

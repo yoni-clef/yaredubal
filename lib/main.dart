@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:yaredubal/screen/CustomerDashboard.dart';
 import 'package:yaredubal/screen/login.dart';
+import 'package:yaredubal/screen/landingPage.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,7 +26,7 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
         primarySwatch: Colors.amber,
       ),
-      home: LoginPage(),
+      home: OnboardingPage(),
     );
     //     home: FutureBuilder<Map<String, dynamic>?>(
     //       future: navigateBasedOnRole(),
